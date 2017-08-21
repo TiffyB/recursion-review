@@ -10,27 +10,42 @@ var parseJSON = function(json) {
 
   //for example, may receive "[]", which is an array
   //need to check if first letter is === "["
+  if (json[0] === "[") {
     //if yes, create an elements array
+    var elements = [];
     //remove last bracket
+    
     //if length of string is greater than 2
+    if (json.length > 2) {
       //check if "," characters are included
+      if (json.includes(",")) {//may cause a problem if there's a comma within a string
         //if yes, then split by a comma
+        var splitElements = json.slice(1, json.length - 1).split(","); //no space, correct?
         //iterate over split elements
+        splitElements.forEach(function(element) {
           //call parseJSON function on each element
           //push result to elements
-    //return elements;
+          elements.push(parseJSON(element));
+        });
+      }
+    }
+    return elements;
+  }
+    
         
 
   //if first character is "{"
   if (json[0] === "{") {
     var obj = {};
-    var splitPairs = json.split(",");
-    splitPairs = splitPairs.map(function(pair) {
-      return pair.split(":");
-    });
-    splitPairs.forEach(function(pair){
-      obj[parseJSON(pair[0])] = parseJSON(pair[1]);
-    });
+    if(json.length > 2) {
+      var splitPairs = json.slice(1, json.length - 1).split(",");
+      splitPairs = splitPairs.map(function(pair) {
+        return pair.split(":");
+      });
+      splitPairs.forEach(function(pair){
+        obj[parseJSON(pair[0])] = parseJSON(pair[1]);
+      });
+    }
     return obj;
   }
     //if yes, create a empty object {} emptyObj
@@ -44,11 +59,16 @@ var parseJSON = function(json) {
     //how do we handle strings??? 
     //note: "\"blah\""
     //if \" is found
-  if (json[0] === '"') {//note may cause problems
+  //if (json[0] === '"') {//note may cause problems
+  if (json.slice(0, 2) === '\"') {
       //(json is then a string)
     //remove first \"
     //find the end pair \" and remove
-    var string = json.slice(1, json.length - 1);
+    var string = "";
+    if (json.length > 2) {
+      string = json.slice(1, json.length - 1);
+    }
+    
     return string;
   }
   //how to handle numbers
