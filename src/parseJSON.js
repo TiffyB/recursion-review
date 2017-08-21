@@ -23,7 +23,15 @@ var parseJSON = function(json) {
 
   //if first character is "{"
   if (json[0] === "{") {
-  
+    var obj = {};
+    var splitPairs = json.split(",");
+    splitPairs = splitPairs.map(function(pair) {
+      return pair.split(":");
+    });
+    splitPairs.forEach(function(pair){
+      obj[parseJSON(pair[0])] = parseJSON(pair[1]);
+    });
+    return obj;
   }
     //if yes, create a empty object {} emptyObj
     //split string by commas and place in splitPairs array
@@ -36,20 +44,32 @@ var parseJSON = function(json) {
     //how do we handle strings??? 
     //note: "\"blah\""
     //if \" is found
+  if (json[0] === '"') {//note may cause problems
       //(json is then a string)
-      //remove first \"
-      //find the end pair \" and remove
-      //return resulting string
-
+    //remove first \"
+    //find the end pair \" and remove
+    var string = json.slice(1, json.length - 1);
+    return string;
+  }
   //how to handle numbers
-    //check if first character is a number by....isNaN(Number(str)) <- will equal true for non numbers OR check if "-" is the first char
-      //turn string into a number using Number();
+  //check if first character is a number by....isNaN(Number(str)) <- will equal true for non numbers OR check if "-" is the first char
+  if (!isNaN(Number(json))) {
+    //turn string into a number using Number();
+    return Number(json);
+  }
+      
 
   //how to handle booleans
     //if string is equal to "true" or "false"
-      // if string === "true"
-        //return true
-      //else return false;
-
-  //
+  if (json === "true" || json === "false") {
+    // if string === "true"
+    if (json === "true") {
+      return true;
+    }
+    return false;
+  }
+      
+  if (json === "null") {
+    return null;
+  }
 };
