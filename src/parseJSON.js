@@ -15,8 +15,22 @@ var parseJSON = function(json) {
     //if length of string is greater than 2
       //check if "," characters are included
         //if yes, then split by a comma
-        //iterate over split elements and push to elements array
+        //iterate over split elements
+          //call parseJSON function on each element
+          //push result to elements
+    //return elements;
+        
 
+  //if first character is "{"
+  if (json[0] === "{") {
+  
+  }
+    //if yes, create a empty object {} emptyObj
+    //split string by commas and place in splitPairs array
+    //split each split element by colons and place in a pair array
+    
+      //call parseJSON on both the key and value
+      //
 
   //how to handle primatives
     //how do we handle strings??? 
