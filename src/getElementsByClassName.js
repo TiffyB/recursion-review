@@ -4,8 +4,7 @@
 // };
 
 // But instead we're going to implement it from scratch:
-var getElementsByClassName = function(className, node
-) {
+var getElementsByClassName = function(className, node) {
   // your code here
   /*
     initial thoughts:
@@ -21,6 +20,13 @@ var getElementsByClassName = function(className, node
        use concatenation for return value of GECN(getElementsByClassName) fn on child nodes to output array
       return array
   */
-  
-  
+  var output = [];
+  node = node || document.body;
+  if (node.classList.contains(className)) {
+    output.push(node);
+  }
+  for (var i = 0; i < node.children.length; i++) {
+    output = output.concat(getElementsByClassName(className, node.children[i]));
+  }
+  return output;
 };
