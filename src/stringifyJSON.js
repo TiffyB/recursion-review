@@ -40,8 +40,8 @@ var stringifyJSON = function(obj) {
     for (var key in obj) {
       //send both key and value thru stringifyJSON function
       var stringifiedKey = stringifyJSON(key);
-
-      if(typeof obj[key] !== "function" || obj[key] !== undefined) {
+      //handle unstringifiables i.e. functions and undefined
+      if(typeof obj[key] !== "function" && obj[key] !== undefined) {
         var stringifiedValue = stringifyJSON(obj[key]);
         //join key and value pairs with a ":"
         var pair = "".concat(stringifiedKey, ":", stringifiedValue);
@@ -52,11 +52,6 @@ var stringifyJSON = function(obj) {
     //join all pairs together with a "," and add brackets to each end
     return "".concat("{", pairs.join(","), "}");
   }
-  //handle unstringifiables i.e. functions and undefined
-  
-    
-
-  
 
   //determine if string
   if (typeof obj === "string") {
