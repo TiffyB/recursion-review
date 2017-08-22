@@ -3,10 +3,6 @@
 
 // but you're not, so you'll write it from scratch:
 var parseJSON = function(json) {
-  // your code goes here
-  
-
-
 
   //for example, may receive "[]", which is an array
   //need to check if first letter is === "["
@@ -31,13 +27,11 @@ var parseJSON = function(json) {
     }
     return elements;
   }
-    
-        
 
   //if first character is "{"
   if (json[0] === "{") {
     var obj = {};
-    if(json.length > 2) {
+    if (json.length > 2) {
       var splitPairs = json.slice(1, json.length - 1).split(",");
       splitPairs = splitPairs.map(function(pair) {
         return pair.split(":");
@@ -60,13 +54,17 @@ var parseJSON = function(json) {
     //note: "\"blah\""
     //if \" is found
   //if (json[0] === '"') {//note may cause problems
-  if (json.slice(0, 2) === '\"') {
+  if (json.length === 0) {
+    return "";
+  }
+  //if (json[0] === '"'){
+  if (json.slice(0, 1) === '\"') {
       //(json is then a string)
     //remove first \"
     //find the end pair \" and remove
     var string = "";
     if (json.length > 2) {
-      string = json.slice(1, json.length - 1);
+      string = string + json.slice(1, json.length - 1);
     }
     
     return string;
@@ -92,4 +90,7 @@ var parseJSON = function(json) {
   if (json === "null") {
     return null;
   }
+
+  
+
 };
